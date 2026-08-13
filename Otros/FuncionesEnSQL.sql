@@ -1,0 +1,27 @@
+DELIMITER //
+
+/*
+CREATE FUNCTION calcularIVA (precio DECIMAL(10,2))
+RETURNS DECIMAL (10,2)
+DETERMINISTIC 
+BEGIN 
+	RETURN precio * 0.21;
+END //
+*/
+
+SELECT calcularIVA(1000);
+
+/*
+CREATE FUNCTION tieneStock(cantidad INT)
+RETURNS VARCHAR(50)
+DETERMINISTIC
+BEGIN
+	IF cantidad > 0 THEN
+		RETURN "Disponible";
+	ELSE
+		RETURN "Sin stock";
+	END IF;
+END //
+*/
+
+SELECT tieneStock(0)
