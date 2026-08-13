@@ -1,4 +1,4 @@
-USE biblioteca
+USE biblioteca;
 
 DELIMITER //
 /*
@@ -9,8 +9,8 @@ BEGIN
 	IF (SELECT genero FROM libros WHERE id = idLibro) IS NOT NULL THEN
 		RETURN (SELECT genero FROM libros WHERE id = idLibro);
 	ELSE
-		RETURN "Desconocido";
+		RETURN "Desconocido";	
 	END IF;
 END //
 */
-SELECT fn_obtener_genero(5)
+SELECT fn_obtener_genero(null)
