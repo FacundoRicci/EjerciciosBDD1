@@ -13,4 +13,4 @@ BEGIN
 	END IF;
 END //
 */
-SELECT fn_obtener_genero(null)
+SELECT fn_obtener_genero(2)
