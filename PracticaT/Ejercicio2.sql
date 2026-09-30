@@ -1,0 +1,7 @@
+START TRANSACTION;
+
+UPDATE libros SET disponible = FALSE WHERE id=2;
+
+COMMIT;
+
+SELECT * FROM libros WHERE id=2;
