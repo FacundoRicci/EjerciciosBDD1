@@ -2,38 +2,41 @@ DROP DATABASE IF EXISTS biblioteca;
 CREATE DATABASE biblioteca;
 USE biblioteca;
 CREATE TABLE autores (
-id INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(100) NOT NULL,
-nacionalidad VARCHAR(50),
-fecha_nacimiento DATE
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(100) NOT NULL,
+	nacionalidad VARCHAR(50),
+	fecha_nacimiento DATE
 ) ENGINE = InnoDB;
+
 CREATE TABLE libros (
-id INT AUTO_INCREMENT PRIMARY KEY,
-titulo VARCHAR(200) NOT NULL,
-autor_id INT NOT NULL,
-genero VARCHAR(50),
-anio_publicacion INT,
-disponible BOOLEAN DEFAULT TRUE,
-FOREIGN KEY (autor_id) REFERENCES autores(id)
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	titulo VARCHAR(200) NOT NULL,
+	autor_id INT NOT NULL,
+	genero VARCHAR(50),
+	anio_publicacion INT,
+	disponible BOOLEAN DEFAULT TRUE,
+	FOREIGN KEY (autor_id) REFERENCES autores(id)
 ) ENGINE = InnoDB;
+
 CREATE TABLE prestamos (
-id INT AUTO_INCREMENT PRIMARY KEY,
-libro_id INT NOT NULL,
-nombre_usuario VARCHAR(100) NOT NULL,
-fecha_prestamo DATE NOT NULL,
-fecha_devolucion_prevista DATE NOT NULL,
-fecha_devolucion_real DATE,
-FOREIGN KEY (libro_id) REFERENCES libros(id)
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	libro_id INT NOT NULL,
+	nombre_usuario VARCHAR(100) NOT NULL,
+	fecha_prestamo DATE NOT NULL,
+	fecha_devolucion_prevista DATE NOT NULL,
+	fecha_devolucion_real DATE,
+	FOREIGN KEY (libro_id) REFERENCES libros(id)
 ) ENGINE = InnoDB;
+
 CREATE TABLE reservas (
-id INT AUTO_INCREMENT PRIMARY KEY,
-libro_id INT NOT NULL,
-nombre_usuario VARCHAR(100) NOT NULL,
-fecha_reserva DATE NOT NULL,
-estado ENUM('activa', 'completada', 'cancelada')
-DEFAULT 'activa',
-FOREIGN KEY (libro_id) REFERENCES libros(id)
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	libro_id INT NOT NULL,
+	nombre_usuario VARCHAR(100) NOT NULL,
+	fecha_reserva DATE NOT NULL,
+	estado ENUM('activa', 'completada', 'cancelada') DEFAULT 'activa',
+	FOREIGN KEY (libro_id) REFERENCES libros(id)
 ) ENGINE = InnoDB;
+
 INSERT INTO autores
 (nombre, nacionalidad, fecha_nacimiento)
 VALUES
@@ -80,4 +83,9 @@ VALUES
 (10, 'Diego Romero', '2026-08-19', 'activa'),
 (3, 'Mónica Silva', '2026-07-15', 'completada');
 
+DELIMITER //
 
+CREATE TRIGGER name_check BEFORE INSERT ON autores FOR EACH ROW
+	IF NEW.nombre = "Maria" THEN
+		SET NEW.nombre = "Maria Paz";
+	END IF //
